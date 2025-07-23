@@ -1,0 +1,3811 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    185304,       3803]
+NotebookOptionsPosition[    184292,       3776]
+NotebookOutlinePosition[    184630,       3791]
+CellTagsIndexPosition[    184587,       3788]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"ngraps", "=", "500"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"nvertex", "=", "30"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"nedges", "=", 
+     RowBox[{"4", "*", "nvertex"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"prandom", "=", "0.2"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"mgdg", "=", "0"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"gccg", "=", "0"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"division", "=", "1"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"size1", "[", "k_", "]"}], "=", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"ngraps", "*", "2"}], ",", "nvertex", ",", "3"}], "}"}]}], 
+    ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"glm", "=", 
+     RowBox[{"Array", "[", 
+      RowBox[{
+       RowBox[{"0", "&"}], ",", 
+       RowBox[{"size1", "[", "k", "]"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"For", "[", 
+     RowBox[{
+      RowBox[{"j", "=", "1"}], ",", 
+      RowBox[{"j", "\[LessEqual]", "ngraps"}], ",", 
+      RowBox[{"j", "++"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"rgw", "=", 
+        RowBox[{"Graph", "[", 
+         RowBox[{
+          RowBox[{"RandomGraph", "[", 
+           RowBox[{"WattsStrogatzGraphDistribution", "[", 
+            RowBox[{"nvertex", ",", "prandom"}], "]"}], "]"}], ",", 
+          RowBox[{"VertexLabels", "\[Rule]", "\"\<Name\>\""}]}], "]"}]}], ";",
+        "\[IndentingNewLine]", 
+       RowBox[{"mgdl", " ", "=", " ", 
+        RowBox[{"MeanGraphDistance", "[", "rgw", "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"gccl", "=", 
+        RowBox[{"GlobalClusteringCoefficient", "[", "rgw", "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"mgdl", "\[NotEqual]", "Infinity"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"mgdg", "=", 
+           RowBox[{"mgdg", "+", 
+            RowBox[{"N", "[", "mgdl", "]"}]}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"division", "++"}], ";"}]}], "\[IndentingNewLine]", "]"}], 
+       ";", "\[IndentingNewLine]", 
+       RowBox[{"gccg", "=", 
+        RowBox[{"gccg", "+", 
+         RowBox[{"N", "[", "gccl", "]"}]}]}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
+       RowBox[{"mass", "=", 
+        RowBox[{
+         RowBox[{"Reap", "[", 
+          RowBox[{"BreadthFirstScan", "[", 
+           RowBox[{"rgw", ",", "1", ",", 
+            RowBox[{"{", 
+             RowBox[{"\"\<DiscoverVertex\>\"", "\[Rule]", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"Sow", "[", "#1", "]"}], "&"}], ")"}]}], "}"}]}], 
+           "]"}], "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"2", ",", "1"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"mass1", "=", 
+        RowBox[{"GraphEmbedding", "[", "rgw", "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"size", "[", "n_", "]"}], "=", 
+        RowBox[{"{", 
+         RowBox[{"nvertex", ",", "3"}], "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"matr", "=", 
+        RowBox[{"Array", "[", 
+         RowBox[{
+          RowBox[{"0", "&"}], ",", 
+          RowBox[{"size", "[", "n", "]"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"For", "[", 
+        RowBox[{
+         RowBox[{"i", "=", "1"}], ",", 
+         RowBox[{"i", "\[LessEqual]", 
+          RowBox[{"Length", "[", "mass", "]"}]}], ",", 
+         RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"matr", "[", 
+            RowBox[{"[", 
+             RowBox[{"i", ",", "1"}], "]"}], "]"}], "=", 
+           RowBox[{"mass1", "[", 
+            RowBox[{"[", 
+             RowBox[{
+              RowBox[{"mass", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", "1"}], "]"}], "]"}]}], 
+          ";", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"matr", "[", 
+            RowBox[{"[", 
+             RowBox[{"i", ",", "2"}], "]"}], "]"}], "=", 
+           RowBox[{"mass1", "[", 
+            RowBox[{"[", 
+             RowBox[{
+              RowBox[{"mass", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", "2"}], "]"}], "]"}]}], 
+          ";", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"matr", "[", 
+            RowBox[{"[", 
+             RowBox[{"i", ",", "3"}], "]"}], "]"}], "=", "0"}], ";"}]}], 
+        "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"glm", "[", 
+         RowBox[{"[", "j", "]"}], "]"}], "=", "matr"}], ";"}]}], 
+     "\[IndentingNewLine]", "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"mgdg", "=", 
+     RowBox[{"mgdg", "/", "division"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"gccg", "=", 
+     RowBox[{"gccg", "/", "500"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"mgdg", ",", "\"\< \>\"", ",", "gccg"}], "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"sat", "=", "0"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"For", "[", 
+     RowBox[{
+      RowBox[{"j", "=", "1"}], ",", 
+      RowBox[{"j", "\[LessEqual]", "ngraps"}], ",", 
+      RowBox[{"j", "++"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"rg", "=", 
+        RowBox[{"Graph", "[", 
+         RowBox[{
+          RowBox[{"RandomGraph", "[", 
+           RowBox[{"{", 
+            RowBox[{"nvertex", ",", "nedges"}], "}"}], "]"}], ",", 
+          RowBox[{"VertexLabels", "\[Rule]", "\"\<Name\>\""}]}], "]"}]}], ";",
+        "\[IndentingNewLine]", 
+       RowBox[{"sta", "=", "1"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"While", "[", 
+        RowBox[{
+         RowBox[{"sta", " ", "\[NotEqual]", "0"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"Between", "[", 
+               RowBox[{
+                RowBox[{"MeanGraphDistance", "[", "rg", "]"}], ",", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"mgdg", "-", "0.3"}], ",", 
+                  RowBox[{"mgdg", "+", "0.3"}]}], "}"}]}], "]"}], "\[Equal]", 
+              "True"}], " ", "&&", " ", 
+             RowBox[{
+              RowBox[{"Between", "[", 
+               RowBox[{
+                RowBox[{"GlobalClusteringCoefficient", "[", "rg", "]"}], ",", 
+                
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"gccg", "-", "0.01"}], ",", 
+                  RowBox[{"mgdg", "+", "0.01"}]}], "}"}]}], "]"}], "\[Equal]",
+               "True"}]}], ",", "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{"sat", "++"}], ";", "\[IndentingNewLine]", 
+             RowBox[{"sta", "=", "1"}], ";", "\[IndentingNewLine]", 
+             RowBox[{"rg", "=", 
+              RowBox[{"Graph", "[", 
+               RowBox[{
+                RowBox[{"RandomGraph", "[", 
+                 RowBox[{"{", 
+                  RowBox[{"nvertex", ",", "nedges"}], "}"}], "]"}], ",", 
+                RowBox[{"VertexLabels", "\[Rule]", "\"\<Name\>\""}]}], 
+               "]"}]}], ";"}], "\[IndentingNewLine]", ",", 
+            RowBox[{
+             RowBox[{"sta", "=", "0"}], ";"}]}], "\[IndentingNewLine]", "]"}],
+           ";"}]}], "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+       
+       RowBox[{"mass2", "=", 
+        RowBox[{
+         RowBox[{"Reap", "[", 
+          RowBox[{"BreadthFirstScan", "[", 
+           RowBox[{"rg", ",", "1", ",", 
+            RowBox[{"{", 
+             RowBox[{"\"\<DiscoverVertex\>\"", "\[Rule]", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"Sow", "[", "#1", "]"}], "&"}], ")"}]}], "}"}]}], 
+           "]"}], "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"2", ",", "1"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"mass3", "=", 
+        RowBox[{"GraphEmbedding", "[", "rg", "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"size", "[", "n_", "]"}], "=", 
+        RowBox[{"{", 
+         RowBox[{"nvertex", ",", "3"}], "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"matr1", "=", 
+        RowBox[{"Array", "[", 
+         RowBox[{
+          RowBox[{"0", "&"}], ",", 
+          RowBox[{"size", "[", "n", "]"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"For", "[", 
+        RowBox[{
+         RowBox[{"i", "=", "1"}], ",", 
+         RowBox[{"i", "\[LessEqual]", 
+          RowBox[{"Length", "[", "mass2", "]"}]}], ",", 
+         RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"matr1", "[", 
+            RowBox[{"[", 
+             RowBox[{"i", ",", "1"}], "]"}], "]"}], "=", 
+           RowBox[{"mass3", "[", 
+            RowBox[{"[", 
+             RowBox[{
+              RowBox[{"mass2", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", "1"}], "]"}], "]"}]}], 
+          ";", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"matr1", "[", 
+            RowBox[{"[", 
+             RowBox[{"i", ",", "2"}], "]"}], "]"}], "=", 
+           RowBox[{"mass3", "[", 
+            RowBox[{"[", 
+             RowBox[{
+              RowBox[{"mass2", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", "2"}], "]"}], "]"}]}], 
+          ";", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"matr1", "[", 
+            RowBox[{"[", 
+             RowBox[{"i", ",", "3"}], "]"}], "]"}], "=", "0"}], ";"}]}], 
+        "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"glm", "[", 
+         RowBox[{"[", 
+          RowBox[{"j", "+", "ngraps"}], "]"}], "]"}], "=", "matr1"}], ";"}]}],
+      "\[IndentingNewLine]", "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "sat", "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"glm", ">>", "out.m"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"glm1", "=", "glm"}], ";"}], "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.884937845490883*^9, 3.884937852970557*^9}, {
+   3.884937946764979*^9, 3.884937947631626*^9}, {3.884938247777009*^9, 
+   3.884938248387289*^9}, {3.884938287682379*^9, 3.8849382883217*^9}, {
+   3.884938580447667*^9, 3.884938597996807*^9}, {3.884939342259687*^9, 
+   3.884939342426676*^9}, {3.884939389600617*^9, 3.884939392681541*^9}, {
+   3.884939500427373*^9, 3.884939500537817*^9}, {3.884939646354308*^9, 
+   3.884939697473569*^9}, {3.884939790706895*^9, 3.884939812456811*^9}, {
+   3.884939891520775*^9, 3.884939949795844*^9}, {3.884939996918614*^9, 
+   3.884940003477696*^9}, {3.884940124677153*^9, 3.8849401461391068`*^9}, {
+   3.884940247133725*^9, 3.884940306408793*^9}, {3.884940543057469*^9, 
+   3.8849407443128233`*^9}, {3.884940929874735*^9, 3.884941027423827*^9}, {
+   3.884941057688476*^9, 3.8849410600831423`*^9}, {3.8849413612035217`*^9, 
+   3.8849413741847353`*^9}, {3.884946974972395*^9, 3.884947112713681*^9}, {
+   3.884947149436022*^9, 3.884947168628119*^9}, {3.884947209465824*^9, 
+   3.884947290888661*^9}, {3.884947321802575*^9, 3.88494734255832*^9}, {
+   3.884950426135553*^9, 3.884950457284967*^9}, {3.8850038504670877`*^9, 
+   3.885003876638871*^9}, {3.8850040384869204`*^9, 3.885004041633101*^9}, {
+   3.885004204023739*^9, 3.8850042474880333`*^9}, {3.885004308107051*^9, 
+   3.8850043558835506`*^9}, {3.885004408524631*^9, 3.8850044909748173`*^9}, {
+   3.885004651854019*^9, 3.8850046822618027`*^9}, {3.8850048878140373`*^9, 
+   3.885004925953483*^9}, {3.885004959219161*^9, 3.8850050955021057`*^9}, {
+   3.885005145928318*^9, 3.885005248191085*^9}, {3.885005282282209*^9, 
+   3.885005326923727*^9}, {3.8850055582493563`*^9, 3.885005569746428*^9}, {
+   3.885006207132023*^9, 3.88500627024935*^9}, {3.885006354230431*^9, 
+   3.885006355139454*^9}, {3.885006623835149*^9, 3.885006624971994*^9}, {
+   3.885006667453768*^9, 3.885006671276113*^9}, {3.885101702668953*^9, 
+   3.8851017324288187`*^9}, {3.885102459735304*^9, 3.8851024786060467`*^9}, {
+   3.8851032841179733`*^9, 3.885103437022987*^9}, {3.88510347259694*^9, 
+   3.885103640868617*^9}, {3.8851036795581837`*^9, 3.885103686441812*^9}, {
+   3.885104455083561*^9, 3.885104458253681*^9}, {3.885104720084882*^9, 
+   3.885104727889793*^9}, {3.885105915476467*^9, 3.885105964727034*^9}, {
+   3.8851060722696323`*^9, 3.885106119429471*^9}, {3.885106158929716*^9, 
+   3.885106161114148*^9}, {3.8851061969234533`*^9, 3.885106202558077*^9}, {
+   3.885106238088427*^9, 3.885106268754239*^9}, {3.885106350096932*^9, 
+   3.885106372561286*^9}, {3.8851064917148046`*^9, 3.885106510410275*^9}, {
+   3.885106550495434*^9, 3.885106585888722*^9}, {3.8851067915430727`*^9, 
+   3.885106806922595*^9}, {3.885106849313374*^9, 3.885106850529022*^9}, {
+   3.88510688282864*^9, 3.885106884154558*^9}, {3.885107705311002*^9, 
+   3.885107708572281*^9}, {3.885449116969245*^9, 3.885449118410557*^9}, {
+   3.885522247152721*^9, 3.8855222475880117`*^9}, {3.885522446549713*^9, 
+   3.885522447166746*^9}, {3.88552259405186*^9, 3.885522597559738*^9}, {
+   3.8855227556616497`*^9, 3.885522756188858*^9}, {3.885523070521928*^9, 
+   3.8855230708799467`*^9}, {3.885523430675268*^9, 3.885523431179657*^9}, {
+   3.8855237086231613`*^9, 3.885523709105506*^9}, {3.885523862215911*^9, 
+   3.885523866145927*^9}, {3.885524254145194*^9, 3.885524256799121*^9}, {
+   3.8855243497728024`*^9, 3.885524350199395*^9}, {3.8855244617815847`*^9, 
+   3.8855244622407093`*^9}, {3.885524586332693*^9, 3.885524586814501*^9}, {
+   3.885524658771235*^9, 3.885524660783429*^9}, {3.885524732899598*^9, 
+   3.885524739896778*^9}, {3.8855248867019777`*^9, 3.885524887398183*^9}, {
+   3.8855250499659023`*^9, 3.885525050255885*^9}, {3.885525212160284*^9, 
+   3.885525214408424*^9}, {3.885525508891465*^9, 3.885525509282494*^9}, {
+   3.885525633361191*^9, 3.885525633774942*^9}, {3.8855257473119783`*^9, 
+   3.8855257476699333`*^9}, {3.885525940473748*^9, 3.885525940866157*^9}, {
+   3.885526069702454*^9, 3.885526070106237*^9}, {3.885526191933838*^9, 
+   3.885526192179124*^9}, {3.885527637379343*^9, 3.885527668637644*^9}, 
+   3.885692428689414*^9, {3.885692851812641*^9, 3.885692852261126*^9}, {
+   3.8856929194008636`*^9, 3.885692919917069*^9}, {3.8856929948192577`*^9, 
+   3.885692995188599*^9}, {3.885693062801062*^9, 3.885693063204246*^9}, {
+   3.88569313599242*^9, 3.885693136428722*^9}, {3.885693370041833*^9, 
+   3.885693370850399*^9}, {3.8856934641459103`*^9, 3.8856934646274853`*^9}, {
+   3.885693583212501*^9, 3.885693587238064*^9}, {3.885693629898745*^9, 
+   3.8856936303024073`*^9}, {3.885693676529387*^9, 3.885693676988707*^9}, {
+   3.885693725971764*^9, 3.885693726374638*^9}, {3.885693782299965*^9, 
+   3.885693782893531*^9}, {3.885693838806075*^9, 3.885693839209299*^9}, {
+   3.885693891716454*^9, 3.885693892105564*^9}, {3.885693994063188*^9, 
+   3.885693997852409*^9}, {3.8856941582636757`*^9, 3.885694158881381*^9}, {
+   3.885694258172525*^9, 3.885694258351046*^9}, {3.8856942988062897`*^9, 
+   3.8856942990297728`*^9}, {3.885694412507139*^9, 3.88569441286579*^9}, {
+   3.8856944733235893`*^9, 3.885694473636478*^9}, {3.8856945266469717`*^9, 
+   3.885694526892681*^9}, {3.885698432602713*^9, 3.8856984357953*^9}, {
+   3.885961431087556*^9, 3.885961546446517*^9}, {3.885961728274283*^9, 
+   3.885961733503099*^9}, {3.885961768019732*^9, 3.885961820050317*^9}, {
+   3.885961948235797*^9, 3.885962004383595*^9}, {3.88596203861943*^9, 
+   3.885962039440897*^9}, {3.8859620733730803`*^9, 3.8859621297863417`*^9}, {
+   3.8859621621051283`*^9, 3.885962182486268*^9}, {3.885962247952519*^9, 
+   3.88596229915092*^9}, {3.885962337120782*^9, 3.885962351283374*^9}, {
+   3.8859624554505053`*^9, 3.885962520135137*^9}, {3.885962557947699*^9, 
+   3.885962577681376*^9}, {3.8859626185428877`*^9, 3.8859626554649973`*^9}, {
+   3.88596278053236*^9, 3.885962812392953*^9}, {3.88596291088869*^9, 
+   3.88596302122961*^9}, {3.8864775812699423`*^9, 3.886477657816965*^9}, {
+   3.886477700129663*^9, 3.886477749935337*^9}, {3.886477784553011*^9, 
+   3.886477799414049*^9}, {3.8864778537775087`*^9, 3.886477854247512*^9}, {
+   3.886477911040596*^9, 3.886477916596953*^9}, {3.8864929779207077`*^9, 
+   3.8864929782998447`*^9}, {3.886493049581525*^9, 3.886493052337294*^9}, {
+   3.886493149214789*^9, 
+   3.886493166202017*^9}},ExpressionUUID->"00840753-6101-4307-9ac2-\
+6274132269ab"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+  "2.974384715588366`", "\[InvisibleSpace]", "\<\" \"\>", "\[InvisibleSpace]",
+    "0.10610051244290801`"}],
+  SequenceForm[2.974384715588366, " ", 0.10610051244290801`],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.885961532997016*^9, 3.885961680733039*^9, 3.885961740694887*^9, {
+   3.885961776523707*^9, 3.885961801807879*^9}, 3.8859619783254547`*^9, 
+   3.8859620093331738`*^9, 3.8859620434083023`*^9, {3.885962075549822*^9, 
+   3.885962130910891*^9}, 3.885962183097951*^9, 3.885962305221882*^9, 
+   3.8859623553423758`*^9, 3.8859625382877493`*^9, 3.8859625828804007`*^9, 
+   3.8859629938715754`*^9, 3.885963025596369*^9, {3.8864777371936293`*^9, 
+   3.886477764854148*^9}, 3.8864778119689693`*^9, 3.886477869050569*^9, 
+   3.886477923526691*^9, {3.886477979281073*^9, 3.886478008048533*^9}},
+ CellLabel->
+  "During evaluation of \
+In[123]:=",ExpressionUUID->"1e0c128c-85b8-4b0e-a408-9ecabaad6db0"],
+
+Cell[BoxData["55"], "Print",
+ CellChangeTimes->{
+  3.885961532997016*^9, 3.885961680733039*^9, 3.885961740694887*^9, {
+   3.885961776523707*^9, 3.885961801807879*^9}, 3.8859619783254547`*^9, 
+   3.8859620093331738`*^9, 3.8859620434083023`*^9, {3.885962075549822*^9, 
+   3.885962130910891*^9}, 3.885962183097951*^9, 3.885962305221882*^9, 
+   3.8859623553423758`*^9, 3.8859625382877493`*^9, 3.8859625828804007`*^9, 
+   3.8859629938715754`*^9, 3.885963025596369*^9, {3.8864777371936293`*^9, 
+   3.886477764854148*^9}, 3.8864778119689693`*^9, 3.886477869050569*^9, 
+   3.886477923526691*^9, 3.886477979281073*^9, 3.886478011757907*^9},
+ CellLabel->
+  "During evaluation of \
+In[123]:=",ExpressionUUID->"0aff4290-9338-4717-ad56-f9a42a92ead2"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+    "glm1", " ", "\:0441\:0432\:0435\:0440\:0445\:0443", " ", 
+     "\:0437\:0430\:043a\:043e\:043c\:0435\:043d\:0442\:0438\:0440\:043e\:0432\
+\:0430\:0442\:044c"}], ",", " ", 
+    RowBox[{
+    "\:0441\:0433\:0435\:043d\:0435\:0440\:0438\:0440\:043e\:0432\:0430\:0442\
+\:044c", " ", "\:043e\:0434\:0438\:043d", " ", "\:0440\:0430\:0437"}], ",", 
+    " ", 
+    RowBox[{
+    "\:0437\:0430\:043f\:0443\:0441\:0442\:0438\:0442\:044c", " ", 
+     "\:044d\:0442\:0443", " ", "\:0447\:0430\:0441\:0442\:044c"}]}], "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"sizez", "[", "l_", "]"}], "=", 
+     RowBox[{"{", "ngraps", "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"addzarr", "=", 
+     RowBox[{"Array", "[", 
+      RowBox[{
+       RowBox[{"0", "&"}], ",", 
+       RowBox[{"sizez", "[", "l", "]"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"sizez", "[", "d_", "]"}], "=", 
+     RowBox[{"{", "ngraps", "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"addoarr", "=", 
+     RowBox[{"Array", "[", 
+      RowBox[{
+       RowBox[{"1", "&"}], ",", 
+       RowBox[{"sizez", "[", "d", "]"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"addarr", " ", "=", " ", 
+     RowBox[{"Join", "[", 
+      RowBox[{"addzarr", ",", "addoarr"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"c", "=", 
+     RowBox[{"Classify", "[", 
+      RowBox[{
+       RowBox[{"glm", "\[Rule]", "addarr"}], ",", 
+       RowBox[{"Method", "\[Rule]", "\"\<SupportVectorMachine\>\""}]}], 
+      "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"Information", "[", "c", "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.885523162872698*^9, 3.8855233376324873`*^9}, {
+  3.8855253651953793`*^9, 3.8855254085630913`*^9}},
+ CellLabel->"In[93]:=",ExpressionUUID->"ca1201d6-f653-4298-b8e7-ad2e2ccc80d8"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   FrameBox[GridBox[{
+      {
+       ItemBox[
+        FrameBox[
+         StyleBox["\<\"Classifier information\"\>", "SuggestionsBarText",
+          StripOnInput->False,
+          FontSize->12],
+         FrameMargins->{{10, 5}, {-4, 2}},
+         FrameStyle->None,
+         StripOnInput->False],
+        Alignment->{Left, Bottom},
+        Background->RGBColor[0.96, 0.96, 0.96],
+        Frame->{{False, False}, {True, False}},
+        FrameStyle->Opacity[0.1],
+        ItemSize->{Automatic, 1},
+        StripOnInput->False]},
+      {
+       ItemBox[
+        TagBox[
+         FrameBox[
+          TagBox[GridBox[{
+             {
+              
+              TemplateBox[{
+               TemplateBox[{5}, "Spacer1"],StyleBox["\"Data type\"", 
+                 GrayLevel[0.4], StripOnInput -> False]},
+               "RowDefault"], 
+              TagBox[
+               TooltipBox[
+                TemplateBox[{"\"Mixed\"",StyleBox[
+                   
+                   TemplateBox[{"\" (number: \"", "50", "\")\""}, 
+                    "RowDefault"], 
+                   GrayLevel[0.5], StripOnInput -> False]},
+                 "RowDefault"],
+                TagBox[
+                 RowBox[{"{", 
+                   RowBox[{
+                    TemplateBox[{"\"NumericalVector\"", 
+                    StyleBox[
+                    TemplateBox[{"\" (\"", "3", "\")\""}, "RowDefault"], 
+                    GrayLevel[0.5], StripOnInput -> False]}, "RowDefault"], 
+                    ",", 
+                    TemplateBox[{"\"NumericalVector\"", 
+                    StyleBox[
+                    TemplateBox[{"\" (\"", "3", "\")\""}, "RowDefault"], 
+                    GrayLevel[0.5], StripOnInput -> False]}, "RowDefault"], 
+                    ",", 
+                    TemplateBox[{"\"NumericalVector\"", 
+                    StyleBox[
+                    TemplateBox[{"\" (\"", "3", "\")\""}, "RowDefault"], 
+                    GrayLevel[0.5], StripOnInput -> False]}, "RowDefault"], 
+                    ",", 
+                    TemplateBox[{"\"NumericalVector\"", 
+                    StyleBox[
+                    TemplateBox[{"\" (\"", "3", "\")\""}, "RowDefault"], 
+                    GrayLevel[0.5], StripOnInput -> False]}, "RowDefault"], 
+                    ",", 
+                    TemplateBox[{"\"NumericalVector\"", 
+                    StyleBox[
+                    TemplateBox[{"\" (\"", "3", "\")\""}, "RowDefault"], 
+                    GrayLevel[0.5], StripOnInput -> False]}, "RowDefault"], 
+                    ",", 
+                    TemplateBox[{"\"NumericalVector\"", 
+                    StyleBox[
+                    TemplateBox[{"\" (\"", "3", "\")\""}, "RowDefault"], 
+                    GrayLevel[0.5], StripOnInput -> False]}, "RowDefault"], 
+                    ",", 
+                    TemplateBox[{"\"NumericalVector\"", 
+                    StyleBox[
+                    TemplateBox[{"\" (\"", "3", "\")\""}, "RowDefault"], 
+                    GrayLevel[0.5], StripOnInput -> False]}, "RowDefault"], 
+                    ",", 
+                    TemplateBox[{"\"NumericalVector\"", 
+                    StyleBox[
+                    TemplateBox[{"\" (\"", "3", "\")\""}, "RowDefault"], 
+                    GrayLevel[0.5], StripOnInput -> False]}, "RowDefault"], 
+                    ",", 
+                    TemplateBox[{"\"NumericalVector\"", 
+                    StyleBox[
+                    TemplateBox[{"\" (\"", "3", "\")\""}, "RowDefault"], 
+                    GrayLevel[0.5], StripOnInput -> False]}, "RowDefault"], 
+                    ",", 
+                    TemplateBox[{"\"NumericalVector\"", 
+                    StyleBox[
+                    TemplateBox[{"\" (\"", "3", "\")\""}, "RowDefault"], 
+                    GrayLevel[0.5], StripOnInput -> False]}, "RowDefault"], 
+                    ",", 
+                    TemplateBox[{"\"NumericalVector\"", 
+                    StyleBox[
+                    TemplateBox[{"\" (\"", "3", "\")\""}, "RowDefault"], 
+                    GrayLevel[0.5], StripOnInput -> False]}, "RowDefault"], 
+                    ",", 
+                    RowBox[{"\[LeftSkeleton]", "28", "\[RightSkeleton]"}], 
+                    ",", 
+                    TemplateBox[{"\"NumericalVector\"", 
+                    StyleBox[
+                    TemplateBox[{"\" (\"", "3", "\")\""}, "RowDefault"], 
+                    GrayLevel[0.5], StripOnInput -> False]}, "RowDefault"], 
+                    ",", 
+                    TemplateBox[{"\"NumericalVector\"", 
+                    StyleBox[
+                    TemplateBox[{"\" (\"", "3", "\")\""}, "RowDefault"], 
+                    GrayLevel[0.5], StripOnInput -> False]}, "RowDefault"], 
+                    ",", 
+                    TemplateBox[{"\"NumericalVector\"", 
+                    StyleBox[
+                    TemplateBox[{"\" (\"", "3", "\")\""}, "RowDefault"], 
+                    GrayLevel[0.5], StripOnInput -> False]}, "RowDefault"], 
+                    ",", 
+                    TemplateBox[{"\"NumericalVector\"", 
+                    StyleBox[
+                    TemplateBox[{"\" (\"", "3", "\")\""}, "RowDefault"], 
+                    GrayLevel[0.5], StripOnInput -> False]}, "RowDefault"], 
+                    ",", 
+                    TemplateBox[{"\"NumericalVector\"", 
+                    StyleBox[
+                    TemplateBox[{"\" (\"", "3", "\")\""}, "RowDefault"], 
+                    GrayLevel[0.5], StripOnInput -> False]}, "RowDefault"], 
+                    ",", 
+                    TemplateBox[{"\"NumericalVector\"", 
+                    StyleBox[
+                    TemplateBox[{"\" (\"", "3", "\")\""}, "RowDefault"], 
+                    GrayLevel[0.5], StripOnInput -> False]}, "RowDefault"], 
+                    ",", 
+                    TemplateBox[{"\"NumericalVector\"", 
+                    StyleBox[
+                    TemplateBox[{"\" (\"", "3", "\")\""}, "RowDefault"], 
+                    GrayLevel[0.5], StripOnInput -> False]}, "RowDefault"], 
+                    ",", 
+                    TemplateBox[{"\"NumericalVector\"", 
+                    StyleBox[
+                    TemplateBox[{"\" (\"", "3", "\")\""}, "RowDefault"], 
+                    GrayLevel[0.5], StripOnInput -> False]}, "RowDefault"], 
+                    ",", 
+                    TemplateBox[{"\"NumericalVector\"", 
+                    StyleBox[
+                    TemplateBox[{"\" (\"", "3", "\")\""}, "RowDefault"], 
+                    GrayLevel[0.5], StripOnInput -> False]}, "RowDefault"], 
+                    ",", 
+                    TemplateBox[{"\"NumericalVector\"", 
+                    StyleBox[
+                    TemplateBox[{"\" (\"", "3", "\")\""}, "RowDefault"], 
+                    GrayLevel[0.5], StripOnInput -> False]}, "RowDefault"], 
+                    ",", 
+                    TemplateBox[{"\"NumericalVector\"", 
+                    StyleBox[
+                    TemplateBox[{"\" (\"", "3", "\")\""}, "RowDefault"], 
+                    GrayLevel[0.5], StripOnInput -> False]}, "RowDefault"]}], 
+                   "}"}], Short[#, 10]& ]],
+               Annotation[#, 
+                Short[{
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}], 
+                  Row[{"NumericalVector", 
+                    Style[
+                    Row[{" (", 3, ")"}], 
+                    GrayLevel[0.5]]}]}, 10], "Tooltip"]& ]},
+             {
+              TemplateBox[{TemplateBox[{5}, "Spacer1"],StyleBox["\"Classes\"", 
+                 GrayLevel[0.4], StripOnInput -> False]},
+               "RowDefault"], 
+              TemplateBox[{",","\",\"","0","1"},
+               "RowWithSeparators"]},
+             {
+              
+              TemplateBox[{
+               TemplateBox[{5}, "Spacer1"],StyleBox["\"Accuracy\"", 
+                 GrayLevel[0.4], StripOnInput -> False]},
+               "RowDefault"], 
+              TemplateBox[{InterpretationBox[
+                 RowBox[{"(", 
+                   TemplateBox[{"72.", "5."}, "Around"], ")"}], 
+                 Around[72.3241439855366081702`3., 4.5008686119104330814`3.]],
+                "\"%\"","percent","\"Percent\""},
+               "QuantityPostfix"]},
+             {
+              
+              TemplateBox[{
+               TemplateBox[{5}, "Spacer1"],StyleBox["\"Method\"", 
+                 GrayLevel[0.4], StripOnInput -> False]},
+               "RowDefault"], 
+              TagBox[
+               TooltipBox["\<\"SupportVectorMachine\"\>",
+                TemplateBox[{
+                  TagBox[
+                   
+                   DynamicModuleBox[{
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$ = 
+                    Data`UnorderedAssociation[
+                    "RowCount" -> 20, "Length" -> 6, "InitialType" -> 
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[String]}], "Shape" -> 
+                    TypeSystem`PackageScope`DocumentShape[
+                    
+                    Association[{"KernelType"} -> 
+                    TypeSystem`PackageScope`AtomShape[182.40000000000003`], {
+                    "GammaScalingParameter"} -> 
+                    TypeSystem`PackageScope`AtomShape[60], {
+                    "SoftMarginParameter"} -> 
+                    TypeSystem`PackageScope`AtomShape[34], {
+                    "PolynomialDegree"} -> 
+                    TypeSystem`PackageScope`AtomShape[34], {"BiasParameter"} -> 
+                    TypeSystem`PackageScope`AtomShape[34], {
+                    "MulticlassStrategy"} -> 
+                    TypeSystem`PackageScope`AtomShape[115.20000000000002`]], 
+                    1], "InitialData" -> 
+                    TypeSystem`PackageScope`CacheHandle[1195762393], "Type" -> 
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[String]}], "HandleQ" -> True, "RowTarget" -> 
+                    20, "Data" -> 
+                    TypeSystem`PackageScope`CacheHandle[1195762393]], 
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$ = {}, 
+                    TypeSystem`NestedGrid`PackagePrivate`$pos$$ = 1, 
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$ = 
+                    DynamicModule[{
+                    TypeSystem`NestedGrid`PackagePrivate`renderedGrid = Deploy[
+                    Style[
+                    Grid[{{
+                    Item[
+                    Annotation[
+                    EventHandler[
+                    MouseAppearance[
+                    Mouseover[
+                    Pane[
+                    RawBoxes[
+                    StyleBox[
+                    "\"KernelType\"", FontColor -> GrayLevel[0.4]]], {{
+                    20, Full}, 15}], 
+                    Style[
+                    Pane[
+                    RawBoxes[
+                    StyleBox[
+                    "\"KernelType\"", FontColor -> 
+                    RGBColor[0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], {{20, Full}, 15}], FontColor -> 
+                    RGBColor[0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
+                    TypeSystem`NestedGrid`PackagePrivate`updateState[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$pos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 1172451689][{
+                    Key["KernelType"]}]], 
+                    TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                    1172451689][
+                    GeneralUtilities`Slice[
+                    Key["KernelType"]]], "Mouse"], Background -> 
+                    GrayLevel[0.95], Alignment -> {Left, Baseline}], 
+                    Pane[
+                    Annotation["RadialBasisFunction", 
+                    TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                    1172451689][
+                    GeneralUtilities`Slice[
+                    Key["KernelType"]]], "Mouse"], 
+                    ImageSize -> {{182.40000000000003`, Full}, Automatic}, 
+                    Alignment -> {Left, Baseline}]}, {
+                    Item[
+                    Annotation[
+                    EventHandler[
+                    MouseAppearance[
+                    Mouseover[
+                    Pane[
+                    RawBoxes[
+                    StyleBox[
+                    "\"GammaScalingParameter\"", FontColor -> 
+                    GrayLevel[0.4]]], {{20, Full}, 15}], 
+                    Style[
+                    Pane[
+                    RawBoxes[
+                    StyleBox[
+                    "\"GammaScalingParameter\"", FontColor -> 
+                    RGBColor[0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], {{20, Full}, 15}], FontColor -> 
+                    RGBColor[0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
+                    TypeSystem`NestedGrid`PackagePrivate`updateState[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$pos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 1172451689][{
+                    Key["GammaScalingParameter"]}]], 
+                    TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                    1172451689][
+                    GeneralUtilities`Slice[
+                    Key["GammaScalingParameter"]]], "Mouse"], Background -> 
+                    GrayLevel[0.95], Alignment -> {Left, Baseline}], 
+                    Pane[
+                    Annotation[
+                    RawBoxes["0.00849068"], 
+                    TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                    1172451689][
+                    GeneralUtilities`Slice[
+                    Key["GammaScalingParameter"]]], "Mouse"], 
+                    ImageSize -> {{60, Full}, Automatic}, 
+                    Alignment -> {Left, Baseline}]}, {
+                    Item[
+                    Annotation[
+                    EventHandler[
+                    MouseAppearance[
+                    Mouseover[
+                    Pane[
+                    RawBoxes[
+                    StyleBox[
+                    "\"SoftMarginParameter\"", FontColor -> 
+                    GrayLevel[0.4]]], {{20, Full}, 15}], 
+                    Style[
+                    Pane[
+                    RawBoxes[
+                    StyleBox[
+                    "\"SoftMarginParameter\"", FontColor -> 
+                    RGBColor[0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], {{20, Full}, 15}], FontColor -> 
+                    RGBColor[0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
+                    TypeSystem`NestedGrid`PackagePrivate`updateState[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$pos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 1172451689][{
+                    Key["SoftMarginParameter"]}]], 
+                    TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                    1172451689][
+                    GeneralUtilities`Slice[
+                    Key["SoftMarginParameter"]]], "Mouse"], Background -> 
+                    GrayLevel[0.95], Alignment -> {Left, Baseline}], 
+                    Pane[
+                    Annotation[
+                    RawBoxes["3"], 
+                    TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                    1172451689][
+                    GeneralUtilities`Slice[
+                    Key["SoftMarginParameter"]]], "Mouse"], 
+                    ImageSize -> {{34, Full}, Automatic}, 
+                    Alignment -> {Left, Baseline}]}, {
+                    Item[
+                    Annotation[
+                    EventHandler[
+                    MouseAppearance[
+                    Mouseover[
+                    Pane[
+                    RawBoxes[
+                    StyleBox[
+                    "\"PolynomialDegree\"", FontColor -> GrayLevel[0.4]]], {{
+                    20, Full}, 15}], 
+                    Style[
+                    Pane[
+                    RawBoxes[
+                    StyleBox["\"PolynomialDegree\"", FontColor -> 
+                    RGBColor[0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], {{20, Full}, 15}], FontColor -> 
+                    RGBColor[0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
+                    TypeSystem`NestedGrid`PackagePrivate`updateState[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$pos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 1172451689][{
+                    Key["PolynomialDegree"]}]], 
+                    TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                    1172451689][
+                    GeneralUtilities`Slice[
+                    Key["PolynomialDegree"]]], "Mouse"], Background -> 
+                    GrayLevel[0.95], Alignment -> {Left, Baseline}], 
+                    Pane[
+                    Annotation[
+                    RawBoxes["3"], 
+                    TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                    1172451689][
+                    GeneralUtilities`Slice[
+                    Key["PolynomialDegree"]]], "Mouse"], 
+                    ImageSize -> {{34, Full}, Automatic}, 
+                    Alignment -> {Left, Baseline}]}, {
+                    Item[
+                    Annotation[
+                    EventHandler[
+                    MouseAppearance[
+                    Mouseover[
+                    Pane[
+                    RawBoxes[
+                    StyleBox[
+                    "\"BiasParameter\"", FontColor -> GrayLevel[0.4]]], {{
+                    20, Full}, 15}], 
+                    Style[
+                    Pane[
+                    RawBoxes[
+                    StyleBox[
+                    "\"BiasParameter\"", FontColor -> 
+                    RGBColor[0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], {{20, Full}, 15}], FontColor -> 
+                    RGBColor[0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
+                    TypeSystem`NestedGrid`PackagePrivate`updateState[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$pos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 1172451689][{
+                    Key["BiasParameter"]}]], 
+                    TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                    1172451689][
+                    GeneralUtilities`Slice[
+                    Key["BiasParameter"]]], "Mouse"], Background -> 
+                    GrayLevel[0.95], Alignment -> {Left, Baseline}], 
+                    Pane[
+                    Annotation[
+                    RawBoxes["1"], 
+                    TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                    1172451689][
+                    GeneralUtilities`Slice[
+                    Key["BiasParameter"]]], "Mouse"], 
+                    ImageSize -> {{34, Full}, Automatic}, 
+                    Alignment -> {Left, Baseline}]}, {
+                    Item[
+                    Annotation[
+                    EventHandler[
+                    MouseAppearance[
+                    Mouseover[
+                    Pane[
+                    RawBoxes[
+                    StyleBox[
+                    "\"MulticlassStrategy\"", FontColor -> 
+                    GrayLevel[0.4]]], {{20, Full}, 15}], 
+                    Style[
+                    Pane[
+                    RawBoxes[
+                    StyleBox[
+                    "\"MulticlassStrategy\"", FontColor -> 
+                    RGBColor[0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], {{20, Full}, 15}], FontColor -> 
+                    RGBColor[0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
+                    TypeSystem`NestedGrid`PackagePrivate`updateState[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$pos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 1172451689][{
+                    Key["MulticlassStrategy"]}]], 
+                    TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                    1172451689][
+                    GeneralUtilities`Slice[
+                    Key["MulticlassStrategy"]]], "Mouse"], Background -> 
+                    GrayLevel[0.95], Alignment -> {Left, Baseline}], 
+                    Pane[
+                    Annotation["OneVersusOne", 
+                    TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                    1172451689][
+                    GeneralUtilities`Slice[
+                    Key["MulticlassStrategy"]]], "Mouse"], 
+                    ImageSize -> {{115.20000000000002`, Full}, Automatic}, 
+                    Alignment -> {Left, Baseline}]}}, 
+                    BaseStyle -> {ContextMenu -> {
+                    MenuItem["Copy position to clipboard", 
+                    KernelExecute[
+                    TypeSystem`NestedGrid`PackagePrivate`toCurrentPosition[
+                    TypeSystem`NestedGrid`PackagePrivate`copyClip]], 
+                    MenuEvaluator -> Automatic], 
+                    MenuItem["Copy data to clipboard", 
+                    KernelExecute[
+                    TypeSystem`NestedGrid`PackagePrivate`toCurrentData[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`copyClip]], 
+                    MenuEvaluator -> Automatic], Delimiter, 
+                    MenuItem["Paste position in new cell", 
+                    KernelExecute[
+                    TypeSystem`NestedGrid`PackagePrivate`toCurrentPosition[
+                    TypeSystem`NestedGrid`PackagePrivate`cellPaste]], 
+                    MenuEvaluator -> Automatic], 
+                    MenuItem["Paste data in new cell", 
+                    KernelExecute[
+                    TypeSystem`NestedGrid`PackagePrivate`toCurrentData[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`cellPaste]], 
+                    MenuEvaluator -> Automatic]}, FontFamily -> "Verdana", 
+                    FontSize -> 12}, Alignment -> Left, RowMinHeight -> 1.5, 
+                    Dividers -> All, FrameStyle -> GrayLevel[0.85], 
+                    BaseStyle -> {FontFamily -> "Verdana", FontSize -> 12}], 
+                    LineBreakWithin -> False, ContextMenu -> {}, NumberMarks -> 
+                    False, ShowAutoStyles -> False]], 
+                    TypeSystem`NestedGrid`PackagePrivate`initialQ = True, 
+                    TypeSystem`NestedGrid`PackagePrivate`self = $Failed}, 
+                    Dynamic[
+                    TypeSystem`NestedGrid`PackagePrivate`setupViewPath[
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$, If[
+                    Not[TypeSystem`NestedGrid`PackagePrivate`initialQ], 
+                    
+                    Module[{
+                    TypeSystem`NestedGrid`PackagePrivate`tmpGrid$ = $Failed, 
+                    TypeSystem`NestedGrid`PackagePrivate`tmpData$ = 
+                    TypeSystem`NestedGrid`PackagePrivate`LookupCacheValue[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$["Data"]]}, 
+                    TypeSystem`NestedGrid`PackagePrivate`tmpGrid$ = 
+                    If[TypeSystem`NestedGrid`PackagePrivate`tmpData$ === 
+                    TypeSystem`NestedGrid`PackagePrivate`$NotCached, 
+                    TypeSystem`NestedGrid`PackagePrivate`renderedGrid, 
+                    TypeSystem`NestedGrid`PackagePrivate`renderGrid[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$pos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 1172451689][
+                    TypeSystem`NestedGrid`PackagePrivate`tmpData$]]; If[
+                    Not[
+                    FailureQ[TypeSystem`NestedGrid`PackagePrivate`tmpGrid$]], 
+                    TypeSystem`NestedGrid`PackagePrivate`renderedGrid = 
+                    TypeSystem`NestedGrid`PackagePrivate`tmpGrid$]; Null]]; 
+                    TypeSystem`NestedGrid`PackagePrivate`initialQ = False; 
+                    TypeSystem`NestedGrid`PackagePrivate`$pos$$; If[
+                    FailureQ[
+                    TypeSystem`NestedGrid`PackagePrivate`renderedGrid], 
+                    TypeSystem`SparseGrid[
+                    TypeSystem`H["(data no longer present)"]], 
+                    If[GeneralUtilities`$DebugMode, 
+                    
+                    Row[{TypeSystem`NestedGrid`PackagePrivate`renderedGrid, 
+                    "  ", 
+                    TypeSystem`NestedGrid`PackagePrivate`formatState[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$pos$$]}], 
+                    TypeSystem`NestedGrid`PackagePrivate`renderedGrid]]], 
+                    TrackedSymbols :> {
+                    TypeSystem`NestedGrid`PackagePrivate`$pos$$}], 
+                    DynamicModuleValues :> {}], 
+                    TypeSystem`NestedGrid`PackagePrivate`$posCell$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$topBar$$ = Dynamic[
+                    TypeSystem`NestedGrid`PackagePrivate`alignBar[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$][
+                    TypeSystem`NestedGrid`PackagePrivate`makeFramedBar[
+                    TypeSystem`PackageScope`Pathbar[
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`updateState[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$pos$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 
+                    1172451689]]]], 
+                    TrackedSymbols :> {
+                    TypeSystem`NestedGrid`PackagePrivate`$path$$}], 
+                    TypeSystem`NestedGrid`PackagePrivate`$bottomBar$$ = Framed[
+                    Dynamic[
+                    Replace[
+                    MouseAnnotation[Null], {
+                    TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                    1172451689][Null] -> "", 
+                    TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                    1172451689][
+                    Pattern[TypeSystem`NestedGrid`PackagePrivate`path, 
+                    Blank[]]] :> (
+                    TypeSystem`NestedGrid`PackagePrivate`$lastPath = 
+                    TypeSystem`NestedGrid`PackagePrivate`path; 
+                    TypeSystem`NestedGrid`PackagePrivate`makePathTrail[
+                    TypeSystem`NestedGrid`PackagePrivate`path, 
+                    TypeSystem`NestedGrid`PackagePrivate`makePathElements]), 
+                    Null :> Spacer[10], Blank[] :> Spacer[10]}], 
+                    TrackedSymbols :> {}], FrameStyle -> None, ImageMargins -> 
+                    0, FrameMargins -> 0, Alignment -> Top, 
+                    ImageSize -> {Automatic, 14}]}, 
+                    DynamicBox[
+                    ToBoxes[
+                    Column[
+                    If[TypeSystem`NestedGrid`PackagePrivate`$path$$ == {}, {
+                    TypeSystem`NestedGrid`PackagePrivate`displayScrollBar[
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$pos$$], 
+                    TypeSystem`NestedGrid`PackagePrivate`onDesktopShow[
+                    TypeSystem`NestedGrid`PackagePrivate`alignBar[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$][
+                    TypeSystem`NestedGrid`PackagePrivate`$bottomBar$$]]}, {
+                    TypeSystem`NestedGrid`PackagePrivate`$topBar$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`displayScrollBar[
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$pos$$], 
+                    TypeSystem`NestedGrid`PackagePrivate`onDesktopShow[
+                    TypeSystem`NestedGrid`PackagePrivate`alignBar[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$][
+                    TypeSystem`NestedGrid`PackagePrivate`$bottomBar$$]]}], 
+                    Spacings -> 
+                    If[TypeSystem`NestedGrid`PackagePrivate`$path$$ == {}, 
+                    0, {{}, {0, 0.05, 0}}]], StandardForm], 
+                    TrackedSymbols :> {
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                    TypeSystem`NestedGrid`PackagePrivate`$grid$$}], 
+                    Initialization :> Block[{$ContextPath = $ContextPath}, 
+                    Needs["TypeSystem`"]], DynamicModuleValues :> {}, 
+                    BaseStyle -> {LineBreakWithin -> False}, Deinitialization :> 
+                    TypeSystem`NestedGrid`PackagePrivate`deleteState[
+                    TypeSystem`NestedGrid`PackagePrivate`$state$$]], Deploy, 
+                   DefaultBaseStyle -> "Deploy"]}, "CopyTag", 
+                 DisplayFunction -> (#& ), 
+                 InterpretationFunction -> ("Dataset[<>]"& )]],
+               Annotation[#, 
+                Dataset[
+                 Association[
+                 "KernelType" -> "RadialBasisFunction", 
+                  "GammaScalingParameter" -> 0.008490677937606593, 
+                  "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                  "BiasParameter" -> 1, "MulticlassStrategy" -> 
+                  "OneVersusOne"], 
+                 
+                 TypeSystem`Struct[{
+                  "KernelType", "GammaScalingParameter", 
+                   "SoftMarginParameter", "PolynomialDegree", "BiasParameter",
+                    "MulticlassStrategy"}, {
+                   TypeSystem`Atom[String], 
+                   TypeSystem`Atom[Real], 
+                   TypeSystem`Atom[Integer], 
+                   TypeSystem`Atom[Integer], 
+                   TypeSystem`Atom[Integer], 
+                   TypeSystem`Atom[String]}], 
+                 Association["ID" -> 124910822835137]], "Tooltip"]& ]},
+             {
+              
+              TemplateBox[{
+               TemplateBox[{5}, "Spacer1"],StyleBox[
+                "\"Single evaluation time\"", 
+                 GrayLevel[0.4], StripOnInput -> False]},
+               "RowDefault"], 
+              
+              TemplateBox[{
+               "3.06`",
+                RowBox[{
+                 "\"ms\"", "\[InvisibleSpace]", "\"/\"", "\[InvisibleSpace]", 
+                  "\"example\""}],"milliseconds per example",FractionBox[
+                "\"Milliseconds\"", "\"Examples\""]},
+               "Quantity"]},
+             {
+              
+              TemplateBox[{
+               TemplateBox[{5}, "Spacer1"],StyleBox[
+                "\"Batch evaluation speed\"", 
+                 GrayLevel[0.4], StripOnInput -> False]},
+               "RowDefault"], 
+              
+              TemplateBox[{
+               "23.2`",
+                RowBox[{
+                 "\"examples\"", "\[InvisibleSpace]", "\"/\"", 
+                  "\[InvisibleSpace]", "\"ms\""}],"examples per millisecond",
+                FractionBox["\"Examples\"", "\"Milliseconds\""]},
+               "Quantity"]},
+             {
+              TemplateBox[{TemplateBox[{5}, "Spacer1"],StyleBox[
+                 TagBox[
+                  TooltipBox[
+                  "\"Loss\"", "\"Mean cross entropy\"", LabelStyle -> 
+                   "TextStyling"], 
+                  Annotation[#, "Mean cross entropy", "Tooltip"]& ], 
+                 GrayLevel[0.4], StripOnInput -> False]},
+               "RowDefault"], 
+              TagBox[
+               TooltipBox[
+                TemplateBox[{"0.5887110480595937334`3.",StyleBox[
+                   
+                   TemplateBox[{
+                    "\" \[PlusMinus] \"", "0.0672037810762024651`2."}, 
+                    "RowDefault"], {10, 
+                    Opacity[0.5]}, StripOnInput -> False]},
+                 "RowDefault"],
+                
+                TemplateBox[{
+                 "\"95% confidence interval: [\"", "0.454303485907188831`3.", 
+                  "\", \"", "0.7231186102119986359`3.", "\"]\""}, 
+                 "RowDefault"],
+                TooltipStyle->{}],
+               Annotation[#, 
+                
+                Row[{"95% confidence interval: [", 0.454303485907188831`3., 
+                  ", ", 0.7231186102119986359`3., "]"}], "Tooltip"]& ]},
+             {
+              
+              TemplateBox[{
+               TemplateBox[{5}, "Spacer1"],StyleBox["\"Model memory\"", 
+                 GrayLevel[0.4], StripOnInput -> False]},
+               "RowDefault"], 
+              TemplateBox[{"1.45`","\"MB\"","megabytes","\"Megabytes\""},
+               "Quantity"]},
+             {
+              
+              TemplateBox[{
+               TemplateBox[{5}, "Spacer1"],StyleBox[
+                "\"Training examples used\"", 
+                 GrayLevel[0.4], StripOnInput -> False]},
+               "RowDefault"], 
+              TemplateBox[{"1000","\"examples\"","examples","\"Examples\""},
+               "Quantity"]},
+             {
+              
+              TemplateBox[{
+               TemplateBox[{5}, "Spacer1"],StyleBox["\"Training time\"", 
+                 GrayLevel[0.4], StripOnInput -> False]},
+               "RowDefault"], 
+              TemplateBox[{"4.19`","\"s\"","seconds","\"Seconds\""},
+               "Quantity"]},
+             {
+              ItemBox[
+               
+               DynamicModuleBox[{
+                MachineLearning`file12Panel`PackagePrivate`pos$$ = 1}, 
+                DynamicBox[ToBoxes[
+                  Show[
+                   Part[{
+                    Graphics[{{{}, {{{}, {}, {
+                    Hue[0.67, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]], 
+                    
+                    Line[{{2.302585092994046, -0.41424070262316}, {
+                    3.6888794541139363`, -0.5298197962485393}, {
+                    5.298317366548036, -0.43443890021428727`}, {
+                    6.684611727667927, -0.4636113171926831}}]}}, {{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]], 
+                    GeometricTransformation[
+                    Inset[
+                    Style[
+                    Graphics[{
+                    EdgeForm[], 
+                    Disk[{0, 0}]}], 
+                    GraphicsBoxOptions -> {DefaultBaseStyle -> Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]]}], {0., 0.}, Automatic, 
+                    Offset[6.272]], {{{
+                    2.302585092994046, -0.41424070262316}}, {{
+                    3.6888794541139363`, -0.5298197962485393}}, {{
+                    5.298317366548036, -0.43443890021428727`}}, {{
+                    6.684611727667927, -0.4636113171926831}}}]}}, {{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]]}, {}}, {{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]]}, {}}}, {{}, {}}}, {{}, {{{}, {}, {
+                    Hue[0.67, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]], 
+                    Line[{{2.302585092994046, -0.49980133853002945`}, {
+                    2.302585092994046, -0.33542719110819574`}}]}, {
+                    Hue[0.9060679774997897, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]], 
+                    
+                    Line[{{3.6888794541139363`, -0.6510320698667944}, {
+                    3.6888794541139363`, -0.42172433210162086`}}]}, {
+                    Hue[0.1421359549995791, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]], 
+                    
+                    Line[{{5.298317366548036, -0.5132895814105807}, {
+                    5.298317366548036, -0.36135379720419064`}}]}, {
+                    Hue[0.37820393249936934`, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]], 
+                    
+                    Line[{{6.684611727667927, -0.6119736709392548}, {
+                    6.684611727667927, -0.334443263207111}}]}}, {{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]}, {
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]}, {
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]}, {
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]}}, {{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]}, {
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]}, {
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]}, {
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[
+                    0.368417, 0.506779, 
+                    0.709798]]}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}}, {{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]}, {
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]}, {
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]}, {
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[
+                    0.368417, 0.506779, 
+                    0.709798]]}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}}}, {{}, {}}}}, {
+                    DisplayFunction -> Identity, DisplayFunction -> Identity, 
+                    AspectRatio -> GoldenRatio^(-1), Axes -> {True, True}, 
+                    AxesLabel -> {None, None}, 
+                    AxesOrigin -> {2.208602027973881, -0.5362408570055047}, 
+                    DisplayFunction :> Identity, 
+                    Frame -> {{True, True}, {True, True}}, 
+                    FrameLabel -> {{None, None}, {
+                    "training examples used", None}}, FrameTicks -> {{Quiet[
+                    Charting`ScaledTicks[{Log, Exp}][#, #2, {6, 6}]]& , {}}, {
+                    Quiet[
+                    Charting`ScaledTicks[{Log, Exp}][#, #2, {6, 6}]]& , {}}}, 
+                    GridLines -> {
+                    Charting`ScaledTickValues[{Log, Exp}][#, #2, {6, 6}]& , 
+                    Charting`ScaledTickValues[{Log, Exp}][#, #2, {6, 6}]& }, 
+                    GridLinesStyle -> Directive[
+                    GrayLevel[0.5, 0.4]], ImageMargins -> 0, 
+                    ImagePadding -> {{Automatic, 10}, {37, 0}}, ImageSize -> 
+                    330, LabelStyle -> 10, 
+                    Method -> {
+                    "OptimizePlotMarkers" -> True, 
+                    "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+                    (Exp[#]& )[
+                    Part[#, 1]], 
+                    (Exp[#]& )[
+                    Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+                    (Exp[#]& )[
+                    Part[#, 1]], 
+                    (Exp[#]& )[
+                    Part[#, 2]]}& )}}, PlotRange -> {{2.208602027973881, 
+                    Log[1000]}, {-0.5362408570055047, -0.41424070262316}}, 
+                    PlotRangeClipping -> True, PlotRangePadding -> {{
+                    Scaled[0.02], 0}, {
+                    Scaled[0.02], 
+                    Scaled[0.05]}}, Ticks -> {Quiet[
+                    Charting`ScaledTicks[{Log, Exp}][#, #2, {6, 6}]]& , Quiet[
+                    
+                    Charting`ScaledTicks[{Log, Exp}][#, #2, {6, 6}]]& }}], 
+                    Graphics[{{}, {{{}, {}, {
+                    Hue[0.67, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]], 
+                    
+                    Line[{{2.302585092994046, 0.7113092947139222}, {
+                    3.6888794541139363`, 0.7232414398553662}, {
+                    5.298317366548036, 0.7476663444143402}, {
+                    6.684611727667927, 0.7277227722772285}}]}}, {{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]], 
+                    GeometricTransformation[
+                    Inset[
+                    Style[
+                    Graphics[{
+                    EdgeForm[], 
+                    Disk[{0, 0}]}], 
+                    GraphicsBoxOptions -> {DefaultBaseStyle -> Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]]}], {0., 0.}, Automatic, 
+                    Offset[6.272]], {{{2.302585092994046, 
+                    0.7113092947139222}}, {{3.6888794541139363`, 
+                    0.7232414398553662}}, {{5.298317366548036, 
+                    0.7476663444143402}}, {{6.684611727667927, 
+                    0.7277227722772285}}}]}}, {{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]]}, {}}, {{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]]}, {}}}, {{}, {}}}, {
+                    DisplayFunction -> Identity, DisplayFunction -> Identity, 
+                    AspectRatio -> GoldenRatio^(-1), Axes -> {True, True}, 
+                    AxesLabel -> {None, None}, 
+                    AxesOrigin -> {2.208602027973881, 0.6961150470672866}, 
+                    DisplayFunction :> Identity, 
+                    Frame -> {{True, True}, {True, True}}, 
+                    FrameLabel -> {{None, None}, {
+                    "training examples used", None}}, 
+                    FrameTicks -> {{Automatic, None}, {Quiet[
+                    Charting`ScaledTicks[{Log, Exp}][#, #2, {6, 6}]]& , {}}}, 
+                    GridLines -> {
+                    Charting`ScaledTickValues[{Log, Exp}][#, #2, {6, 6}]& , 
+                    Charting`ScaledTickValues[{Identity, Identity}][#, #2, {6,
+                     6}]& }, GridLinesStyle -> Directive[
+                    GrayLevel[0.5, 0.4]], ImageMargins -> 0, 
+                    ImagePadding -> {{Automatic, 10}, {37, 0}}, ImageSize -> 
+                    330, LabelStyle -> 10, 
+                    Method -> {
+                    "OptimizePlotMarkers" -> True, 
+                    "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+                    (Exp[#]& )[
+                    Part[#, 1]], 
+                    (Identity[#]& )[
+                    Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+                    (Exp[#]& )[
+                    Part[#, 1]], 
+                    (Identity[#]& )[
+                    Part[#, 2]]}& )}}, PlotRange -> {{2.208602027973881, 
+                    Log[1000]}, {0.6961150470672866, 1}}, PlotRangeClipping -> 
+                    True, PlotRangePadding -> {{
+                    Scaled[0.02], 0}, {
+                    Scaled[0.05], 0}}, Ticks -> {Quiet[
+                    Charting`ScaledTicks[{Log, Exp}][#, #2, {6, 6}]]& , 
+                    Automatic}}], 
+                    Graphics[{{{}, {{{}, {}, 
+                    Tooltip[{
+                    Hue[0.67, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]], 
+                    
+                    Line[{{2.302585092994046, -0.239491088102059}, {
+                    3.6888794541139363`, -0.4589190075037439}, {
+                    5.298317366548036, -0.3988072901624098}, {
+                    6.684611727667927, -0.3678982035647933}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.006238299793648096, 
+                    "SoftMarginParameter" -> 0.1, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124915117802433]]}, Center]], 
+                    Tooltip[{
+                    Hue[0.9060679774997897, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.880722, 0.611041, 0.142051], 
+                    AbsoluteThickness[1.6]], 
+                    
+                    Line[{{3.6888794541139363`, -0.5086439958247939}, {
+                    5.298317366548036, -0.33495393103306514`}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.004025887378209152, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124919412769729]]}, Center]], 
+                    Tooltip[{
+                    Hue[0.1421359549995791, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.560181, 0.691569, 0.194885], 
+                    AbsoluteThickness[1.6]], 
+                    
+                    Line[{{2.302585092994046, -0.373642176892123}, {
+                    3.6888794541139363`, -0.46811677764095394`}, {
+                    5.298317366548036, -0.3886695202751831}, {
+                    6.684611727667927, -0.415855601440281}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.001434528472966658, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124923707737025]]}, Center]], 
+                    Tooltip[{
+                    Hue[0.37820393249936934`, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.922526, 0.385626, 0.209179], 
+                    AbsoluteThickness[1.6]], 
+                    
+                    Line[{{2.302585092994046, -0.30914951812852887`}, {
+                    3.6888794541139363`, -0.43108612271961794`}, {
+                    5.298317366548036, -0.43443890021428727`}, {
+                    6.684611727667927, -0.40477746430144823`}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.002846453381174013, 
+                    "SoftMarginParameter" -> 1., "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124928002704321]]}, Center]], 
+                    Tooltip[{
+                    Hue[0.6142719099991583, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.528488, 0.470624, 0.701351], 
+                    AbsoluteThickness[1.6]], 
+                    
+                    Line[{{2.302585092994046, -0.41424070262316}, {
+                    3.6888794541139363`, -0.5298197962485393}, {
+                    5.298317366548036, -0.3581490285535908}, {
+                    6.684611727667927, -0.4636113171926831}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.008490677937606593, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124932297671617]]}, Center]], 
+                    Tooltip[{
+                    Hue[0.8503398874989481, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.772079, 0.431554, 0.102387], 
+                    AbsoluteThickness[1.6]], 
+                    
+                    Line[{{2.302585092994046, -0.2578310756312764}, {
+                    3.6888794541139363`, -0.4229773698572462}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.006445138027191688, 
+                    "SoftMarginParameter" -> 0.4, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124936592638913]]}, Center]], 
+                    Tooltip[{
+                    Hue[0.08640786499873876, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.363898, 0.618501, 0.782349], 
+                    AbsoluteThickness[1.6]], 
+                    
+                    Line[{{2.302585092994046, -0.40487802983126414`}, {
+                    3.6888794541139363`, -0.4726725734431613}, {
+                    5.298317366548036, -0.39533944900262213`}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.00923807720496315, 
+                    "SoftMarginParameter" -> 1., "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124940887606209]]}, Center]]}, {
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]], 
+                    GeometricTransformation[
+                    Inset[
+                    Style["\[FilledCircle]", FontSize -> 5], {0., 0.}], {{{
+                    2.302585092994046, -0.239491088102059}}, {{
+                    3.6888794541139363`, -0.4589190075037439}}, {{
+                    5.298317366548036, -0.3988072901624098}}, {{
+                    6.684611727667927, -0.3678982035647933}}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.006238299793648096, 
+                    "SoftMarginParameter" -> 0.1, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124915117802433]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.880722, 0.611041, 0.142051], 
+                    AbsoluteThickness[1.6]], 
+                    GeometricTransformation[
+                    Inset[
+                    Style["\[FilledCircle]", FontSize -> 5], {0., 0.}], {{{
+                    3.6888794541139363`, -0.5086439958247939}}, {{
+                    5.298317366548036, -0.33495393103306514`}}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.004025887378209152, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124919412769729]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.560181, 0.691569, 0.194885], 
+                    AbsoluteThickness[1.6]], 
+                    GeometricTransformation[
+                    Inset[
+                    Style["\[FilledCircle]", FontSize -> 5], {0., 0.}], {{{
+                    2.302585092994046, -0.373642176892123}}, {{
+                    3.6888794541139363`, -0.46811677764095394`}}, {{
+                    5.298317366548036, -0.3886695202751831}}, {{
+                    6.684611727667927, -0.415855601440281}}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.001434528472966658, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124923707737025]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.922526, 0.385626, 0.209179], 
+                    AbsoluteThickness[1.6]], 
+                    GeometricTransformation[
+                    Inset[
+                    Style["\[FilledCircle]", FontSize -> 5], {0., 0.}], {{{
+                    2.302585092994046, -0.30914951812852887`}}, {{
+                    3.6888794541139363`, -0.43108612271961794`}}, {{
+                    5.298317366548036, -0.43443890021428727`}}, {{
+                    6.684611727667927, -0.40477746430144823`}}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.002846453381174013, 
+                    "SoftMarginParameter" -> 1., "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124928002704321]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.528488, 0.470624, 0.701351], 
+                    AbsoluteThickness[1.6]], 
+                    GeometricTransformation[
+                    Inset[
+                    Style["\[FilledCircle]", FontSize -> 5], {0., 0.}], {{{
+                    2.302585092994046, -0.41424070262316}}, {{
+                    3.6888794541139363`, -0.5298197962485393}}, {{
+                    5.298317366548036, -0.3581490285535908}}, {{
+                    6.684611727667927, -0.4636113171926831}}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.008490677937606593, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124932297671617]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.772079, 0.431554, 0.102387], 
+                    AbsoluteThickness[1.6]], 
+                    GeometricTransformation[
+                    Inset[
+                    Style["\[FilledCircle]", FontSize -> 5], {0., 0.}], {{{
+                    2.302585092994046, -0.2578310756312764}}, {{
+                    3.6888794541139363`, -0.4229773698572462}}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.006445138027191688, 
+                    "SoftMarginParameter" -> 0.4, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124936592638913]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.363898, 0.618501, 0.782349], 
+                    AbsoluteThickness[1.6]], 
+                    GeometricTransformation[
+                    Inset[
+                    Style["\[FilledCircle]", FontSize -> 5], {0., 0.}], {{{
+                    2.302585092994046, -0.40487802983126414`}}, {{
+                    3.6888794541139363`, -0.4726725734431613}}, {{
+                    5.298317366548036, -0.39533944900262213`}}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.00923807720496315, 
+                    "SoftMarginParameter" -> 1., "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124940887606209]]}, Center]]}, {
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.006238299793648096, 
+                    "SoftMarginParameter" -> 0.1, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124915117802433]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.880722, 0.611041, 0.142051], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.004025887378209152, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124919412769729]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.560181, 0.691569, 0.194885], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.001434528472966658, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124923707737025]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.922526, 0.385626, 0.209179], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.002846453381174013, 
+                    "SoftMarginParameter" -> 1., "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124928002704321]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.528488, 0.470624, 0.701351], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.008490677937606593, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124932297671617]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.772079, 0.431554, 0.102387], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.006445138027191688, 
+                    "SoftMarginParameter" -> 0.4, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124936592638913]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.363898, 0.618501, 0.782349], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.00923807720496315, 
+                    "SoftMarginParameter" -> 1., "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124940887606209]]}, 
+                    Center]], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.006238299793648096, 
+                    "SoftMarginParameter" -> 0.1, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124915117802433]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.880722, 0.611041, 0.142051], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.004025887378209152, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124919412769729]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.560181, 0.691569, 0.194885], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.001434528472966658, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124923707737025]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.922526, 0.385626, 0.209179], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.002846453381174013, 
+                    "SoftMarginParameter" -> 1., "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124928002704321]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.528488, 0.470624, 0.701351], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.008490677937606593, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124932297671617]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.772079, 0.431554, 0.102387], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.006445138027191688, 
+                    "SoftMarginParameter" -> 0.4, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124936592638913]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.363898, 0.618501, 0.782349], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.00923807720496315, 
+                    "SoftMarginParameter" -> 1., "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124940887606209]]}, 
+                    Center]], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}}, {{}, {}}}}, {
+                    DisplayFunction -> Identity, DisplayFunction -> Identity, 
+                    AspectRatio -> GoldenRatio^(-1), Axes -> {True, True}, 
+                    AxesLabel -> {None, None}, 
+                    AxesOrigin -> {2.208602027973881, -0.5459491689233437}, 
+                    DisplayFunction :> Identity, 
+                    Frame -> {{True, True}, {True, True}}, 
+                    FrameLabel -> {{None, None}, {
+                    "training examples used", None}}, FrameTicks -> {{Quiet[
+                    Charting`ScaledTicks[{Log, Exp}][#, #2, {6, 6}]]& , {}}, {
+                    Quiet[
+                    Charting`ScaledTicks[{Log, Exp}][#, #2, {6, 6}]]& , {}}}, 
+                    GridLines -> {
+                    Charting`ScaledTickValues[{Log, Exp}][#, #2, {6, 6}]& , 
+                    Charting`ScaledTickValues[{Log, Exp}][#, #2, {6, 6}]& }, 
+                    GridLinesStyle -> Directive[
+                    GrayLevel[0.5, 0.4]], ImageMargins -> 0, 
+                    ImagePadding -> {{Automatic, 10}, {37, 0}}, ImageSize -> 
+                    330, LabelStyle -> 10, 
+                    Method -> {
+                    "OptimizePlotMarkers" -> True, 
+                    "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+                    (Exp[#]& )[
+                    Part[#, 1]], 
+                    (Exp[#]& )[
+                    Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+                    (Exp[#]& )[
+                    Part[#, 1]], 
+                    (Exp[#]& )[
+                    Part[#, 2]]}& )}}, PlotRange -> {{2.208602027973881, 
+                    Log[1000]}, {-0.5459491689233437, -0.239491088102059}}, 
+                    PlotRangeClipping -> True, PlotRangePadding -> {{
+                    Scaled[0.02], 0}, {
+                    Scaled[0.02], 
+                    Scaled[0.05]}}, Ticks -> {Quiet[
+                    Charting`ScaledTicks[{Log, Exp}][#, #2, {6, 6}]]& , Quiet[
+                    
+                    Charting`ScaledTicks[{Log, Exp}][#, #2, {6, 6}]]& }}]}, 
+                    MachineLearning`file12Panel`PackagePrivate`pos$$], 
+                   PlotLabel -> Grid[{{
+                    Button[
+                    Deploy[
+                    MouseAppearance[
+                    Mouseover[
+                    Graphics[{
+                    GrayLevel[0.25], 
+                    Line[{{0, 0.8}, {-1, 0}, {0, -0.8}}]}, 
+                    ImageSize -> {Automatic, 10}, 
+                    ImagePadding -> {{1, 1}, {1, 1}}, BaselinePosition -> 
+                    Scaled[0.1]], 
+                    Graphics[{
+                    RGBColor[
+                    0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098], 
+                    Line[{{0, 0.8}, {-1, 0}, {0, -0.8}}]}, 
+                    ImageSize -> {Automatic, 10}, 
+                    ImagePadding -> {{1, 1}, {1, 1}}, BaselinePosition -> 
+                    Scaled[0.1]]], "LinkHand"]], 
+                    MachineLearning`file12Panel`PackagePrivate`pos$$ = 
+                    Max[MachineLearning`file12Panel`PackagePrivate`pos$$ - 1, 
+                    1], Appearance -> "Frameless"], 
+                    Part[{
+                    Tooltip[
+                    "Learning curve", 
+                    "mean cross entropy for best algorithm at each training \
+size"], "Accuracy", 
+                    Tooltip[
+                    "Learning curves for all algorithms", 
+                    "mean cross entropy at each training size"]}, 
+                    MachineLearning`file12Panel`PackagePrivate`pos$$], 
+                    Button[
+                    Deploy[
+                    MouseAppearance[
+                    Mouseover[
+                    Graphics[{
+                    GrayLevel[0.25], 
+                    Line[{{0, 0.8}, {1, 0}, {0, -0.8}}]}, 
+                    ImageSize -> {Automatic, 10}, 
+                    ImagePadding -> {{1, 1}, {1, 1}}, BaselinePosition -> 
+                    Scaled[0.1]], 
+                    Graphics[{
+                    RGBColor[
+                    0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098], 
+                    Line[{{0, 0.8}, {1, 0}, {0, -0.8}}]}, 
+                    ImageSize -> {Automatic, 10}, 
+                    ImagePadding -> {{1, 1}, {1, 1}}, BaselinePosition -> 
+                    Scaled[0.1]]], "LinkHand"]], 
+                    MachineLearning`file12Panel`PackagePrivate`pos$$ = 
+                    Min[MachineLearning`file12Panel`PackagePrivate`pos$$ + 1, 
+                    
+                    Length[{
+                    Graphics[{{{}, {{{}, {}, {
+                    Hue[0.67, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]], 
+                    
+                    Line[{{2.302585092994046, -0.41424070262316}, {
+                    3.6888794541139363`, -0.5298197962485393}, {
+                    5.298317366548036, -0.43443890021428727`}, {
+                    6.684611727667927, -0.4636113171926831}}]}}, {{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]], 
+                    GeometricTransformation[
+                    Inset[
+                    Style[
+                    Graphics[{
+                    EdgeForm[], 
+                    Disk[{0, 0}]}], 
+                    GraphicsBoxOptions -> {DefaultBaseStyle -> Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]]}], {0., 0.}, Automatic, 
+                    Offset[6.272]], {{{
+                    2.302585092994046, -0.41424070262316}}, {{
+                    3.6888794541139363`, -0.5298197962485393}}, {{
+                    5.298317366548036, -0.43443890021428727`}}, {{
+                    6.684611727667927, -0.4636113171926831}}}]}}, {{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]]}, {}}, {{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]]}, {}}}, {{}, {}}}, {{}, {{{}, {}, {
+                    Hue[0.67, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]], 
+                    
+                    Line[{{2.302585092994046, -0.49980133853002945`}, {
+                    2.302585092994046, -0.33542719110819574`}}]}, {
+                    Hue[0.9060679774997897, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]], 
+                    
+                    Line[{{3.6888794541139363`, -0.6510320698667944}, {
+                    3.6888794541139363`, -0.42172433210162086`}}]}, {
+                    Hue[0.1421359549995791, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]], 
+                    
+                    Line[{{5.298317366548036, -0.5132895814105807}, {
+                    5.298317366548036, -0.36135379720419064`}}]}, {
+                    Hue[0.37820393249936934`, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]], 
+                    
+                    Line[{{6.684611727667927, -0.6119736709392548}, {
+                    6.684611727667927, -0.334443263207111}}]}}, {{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]}, {
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]}, {
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]}, {
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]}}, {{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]}, {
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]}, {
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]}, {
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[
+                    0.368417, 0.506779, 
+                    0.709798]]}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}}, {{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]}, {
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]}, {
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]}, {
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0.368417, 0.506779, 
+                    0.709798]]}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}}}, {{}, {}}}}, {DisplayFunction -> Identity, DisplayFunction -> 
+                    Identity, AspectRatio -> GoldenRatio^(-1), 
+                    Axes -> {True, True}, AxesLabel -> {None, None}, 
+                    AxesOrigin -> {2.208602027973881, -0.5362408570055047}, 
+                    DisplayFunction :> Identity, 
+                    Frame -> {{True, True}, {True, True}}, 
+                    FrameLabel -> {{None, None}, {
+                    "training examples used", None}}, FrameTicks -> {{Quiet[
+                    Charting`ScaledTicks[{Log, Exp}][#, #2, {6, 6}]]& , {}}, {
+                    Quiet[
+                    Charting`ScaledTicks[{Log, Exp}][#, #2, {6, 6}]]& , {}}}, 
+                    GridLines -> {
+                    Charting`ScaledTickValues[{Log, Exp}][#, #2, {6, 6}]& , 
+                    Charting`ScaledTickValues[{Log, Exp}][#, #2, {6, 6}]& }, 
+                    GridLinesStyle -> Directive[
+                    GrayLevel[0.5, 0.4]], ImageMargins -> 0, 
+                    ImagePadding -> {{Automatic, 10}, {37, 0}}, ImageSize -> 
+                    330, LabelStyle -> 10, 
+                    Method -> {"OptimizePlotMarkers" -> True, 
+                    "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+                    (Exp[#]& )[
+                    Part[#, 1]], 
+                    (Exp[#]& )[
+                    Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+                    (Exp[#]& )[
+                    Part[#, 1]], 
+                    (Exp[#]& )[
+                    Part[#, 2]]}& )}}, PlotRange -> {{2.208602027973881, 
+                    Log[1000]}, {-0.5362408570055047, -0.41424070262316}}, 
+                    PlotRangeClipping -> True, PlotRangePadding -> {{
+                    Scaled[0.02], 0}, {
+                    Scaled[0.02], 
+                    Scaled[0.05]}}, Ticks -> {Quiet[
+                    Charting`ScaledTicks[{Log, Exp}][#, #2, {6, 6}]]& , Quiet[
+                    
+                    Charting`ScaledTicks[{Log, Exp}][#, #2, {6, 6}]]& }}], 
+                    Graphics[{{}, {{{}, {}, {
+                    Hue[0.67, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]], 
+                    
+                    Line[{{2.302585092994046, 0.7113092947139222}, {
+                    3.6888794541139363`, 0.7232414398553662}, {
+                    5.298317366548036, 0.7476663444143402}, {
+                    6.684611727667927, 0.7277227722772285}}]}}, {{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]], 
+                    GeometricTransformation[
+                    Inset[
+                    Style[
+                    Graphics[{
+                    EdgeForm[], 
+                    Disk[{0, 0}]}], 
+                    GraphicsBoxOptions -> {DefaultBaseStyle -> Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]]}], {0., 0.}, Automatic, 
+                    Offset[6.272]], {{{2.302585092994046, 
+                    0.7113092947139222}}, {{3.6888794541139363`, 
+                    0.7232414398553662}}, {{5.298317366548036, 
+                    0.7476663444143402}}, {{6.684611727667927, 
+                    0.7277227722772285}}}]}}, {{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]]}, {}}, {{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]]}, {}}}, {{}, {}}}, {
+                    DisplayFunction -> Identity, DisplayFunction -> Identity, 
+                    AspectRatio -> GoldenRatio^(-1), Axes -> {True, True}, 
+                    AxesLabel -> {None, None}, 
+                    AxesOrigin -> {2.208602027973881, 0.6961150470672866}, 
+                    DisplayFunction :> Identity, 
+                    Frame -> {{True, True}, {True, True}}, 
+                    FrameLabel -> {{None, None}, {
+                    "training examples used", None}}, 
+                    FrameTicks -> {{Automatic, None}, {Quiet[
+                    Charting`ScaledTicks[{Log, Exp}][#, #2, {6, 6}]]& , {}}}, 
+                    GridLines -> {
+                    Charting`ScaledTickValues[{Log, Exp}][#, #2, {6, 6}]& , 
+                    Charting`ScaledTickValues[{Identity, Identity}][#, #2, {6,
+                     6}]& }, GridLinesStyle -> Directive[
+                    GrayLevel[0.5, 0.4]], ImageMargins -> 0, 
+                    ImagePadding -> {{Automatic, 10}, {37, 0}}, ImageSize -> 
+                    330, LabelStyle -> 10, 
+                    Method -> {"OptimizePlotMarkers" -> True, 
+                    "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+                    (Exp[#]& )[
+                    Part[#, 1]], 
+                    (Identity[#]& )[
+                    Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+                    (Exp[#]& )[
+                    Part[#, 1]], 
+                    (Identity[#]& )[
+                    Part[#, 2]]}& )}}, PlotRange -> {{2.208602027973881, 
+                    Log[1000]}, {0.6961150470672866, 1}}, PlotRangeClipping -> 
+                    True, PlotRangePadding -> {{
+                    Scaled[0.02], 0}, {
+                    Scaled[0.05], 0}}, Ticks -> {Quiet[
+                    Charting`ScaledTicks[{Log, Exp}][#, #2, {6, 6}]]& , 
+                    Automatic}}], 
+                    Graphics[{{{}, {{{}, {}, 
+                    Tooltip[{
+                    Hue[0.67, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]], 
+                    
+                    Line[{{2.302585092994046, -0.239491088102059}, {
+                    3.6888794541139363`, -0.4589190075037439}, {
+                    5.298317366548036, -0.3988072901624098}, {
+                    6.684611727667927, -0.3678982035647933}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.006238299793648096, 
+                    "SoftMarginParameter" -> 0.1, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124915117802433]]}, Center]], 
+                    Tooltip[{
+                    Hue[0.9060679774997897, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.880722, 0.611041, 0.142051], 
+                    AbsoluteThickness[1.6]], 
+                    
+                    Line[{{3.6888794541139363`, -0.5086439958247939}, {
+                    5.298317366548036, -0.33495393103306514`}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.004025887378209152, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124919412769729]]}, Center]], 
+                    Tooltip[{
+                    Hue[0.1421359549995791, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.560181, 0.691569, 0.194885], 
+                    AbsoluteThickness[1.6]], 
+                    
+                    Line[{{2.302585092994046, -0.373642176892123}, {
+                    3.6888794541139363`, -0.46811677764095394`}, {
+                    5.298317366548036, -0.3886695202751831}, {
+                    6.684611727667927, -0.415855601440281}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.001434528472966658, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124923707737025]]}, Center]], 
+                    Tooltip[{
+                    Hue[0.37820393249936934`, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.922526, 0.385626, 0.209179], 
+                    AbsoluteThickness[1.6]], 
+                    
+                    Line[{{2.302585092994046, -0.30914951812852887`}, {
+                    3.6888794541139363`, -0.43108612271961794`}, {
+                    5.298317366548036, -0.43443890021428727`}, {
+                    6.684611727667927, -0.40477746430144823`}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.002846453381174013, 
+                    "SoftMarginParameter" -> 1., "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124928002704321]]}, Center]], 
+                    Tooltip[{
+                    Hue[0.6142719099991583, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.528488, 0.470624, 0.701351], 
+                    AbsoluteThickness[1.6]], 
+                    
+                    Line[{{2.302585092994046, -0.41424070262316}, {
+                    3.6888794541139363`, -0.5298197962485393}, {
+                    5.298317366548036, -0.3581490285535908}, {
+                    6.684611727667927, -0.4636113171926831}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.008490677937606593, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124932297671617]]}, Center]], 
+                    Tooltip[{
+                    Hue[0.8503398874989481, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.772079, 0.431554, 0.102387], 
+                    AbsoluteThickness[1.6]], 
+                    
+                    Line[{{2.302585092994046, -0.2578310756312764}, {
+                    3.6888794541139363`, -0.4229773698572462}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.006445138027191688, 
+                    "SoftMarginParameter" -> 0.4, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124936592638913]]}, Center]], 
+                    Tooltip[{
+                    Hue[0.08640786499873876, 0.6, 0.6], 
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.363898, 0.618501, 0.782349], 
+                    AbsoluteThickness[1.6]], 
+                    
+                    Line[{{2.302585092994046, -0.40487802983126414`}, {
+                    3.6888794541139363`, -0.4726725734431613}, {
+                    5.298317366548036, -0.39533944900262213`}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.00923807720496315, 
+                    "SoftMarginParameter" -> 1., "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124940887606209]]}, Center]]}, {
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]], 
+                    GeometricTransformation[
+                    Inset[
+                    Style["\[FilledCircle]", FontSize -> 5], {0., 0.}], {{{
+                    2.302585092994046, -0.239491088102059}}, {{
+                    3.6888794541139363`, -0.4589190075037439}}, {{
+                    5.298317366548036, -0.3988072901624098}}, {{
+                    6.684611727667927, -0.3678982035647933}}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.006238299793648096, 
+                    "SoftMarginParameter" -> 0.1, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124915117802433]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.880722, 0.611041, 0.142051], 
+                    AbsoluteThickness[1.6]], 
+                    GeometricTransformation[
+                    Inset[
+                    Style["\[FilledCircle]", FontSize -> 5], {0., 0.}], {{{
+                    3.6888794541139363`, -0.5086439958247939}}, {{
+                    5.298317366548036, -0.33495393103306514`}}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.004025887378209152, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124919412769729]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.560181, 0.691569, 0.194885], 
+                    AbsoluteThickness[1.6]], 
+                    GeometricTransformation[
+                    Inset[
+                    Style["\[FilledCircle]", FontSize -> 5], {0., 0.}], {{{
+                    2.302585092994046, -0.373642176892123}}, {{
+                    3.6888794541139363`, -0.46811677764095394`}}, {{
+                    5.298317366548036, -0.3886695202751831}}, {{
+                    6.684611727667927, -0.415855601440281}}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.001434528472966658, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124923707737025]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.922526, 0.385626, 0.209179], 
+                    AbsoluteThickness[1.6]], 
+                    GeometricTransformation[
+                    Inset[
+                    Style["\[FilledCircle]", FontSize -> 5], {0., 0.}], {{{
+                    2.302585092994046, -0.30914951812852887`}}, {{
+                    3.6888794541139363`, -0.43108612271961794`}}, {{
+                    5.298317366548036, -0.43443890021428727`}}, {{
+                    6.684611727667927, -0.40477746430144823`}}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.002846453381174013, 
+                    "SoftMarginParameter" -> 1., "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124928002704321]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.528488, 0.470624, 0.701351], 
+                    AbsoluteThickness[1.6]], 
+                    GeometricTransformation[
+                    Inset[
+                    Style["\[FilledCircle]", FontSize -> 5], {0., 0.}], {{{
+                    2.302585092994046, -0.41424070262316}}, {{
+                    3.6888794541139363`, -0.5298197962485393}}, {{
+                    5.298317366548036, -0.3581490285535908}}, {{
+                    6.684611727667927, -0.4636113171926831}}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association["KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.008490677937606593, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124932297671617]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.772079, 0.431554, 0.102387], 
+                    AbsoluteThickness[1.6]], 
+                    GeometricTransformation[
+                    Inset[
+                    Style["\[FilledCircle]", FontSize -> 5], {0., 0.}], {{{
+                    2.302585092994046, -0.2578310756312764}}, {{
+                    3.6888794541139363`, -0.4229773698572462}}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.006445138027191688, 
+                    "SoftMarginParameter" -> 0.4, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124936592638913]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.363898, 0.618501, 0.782349], 
+                    AbsoluteThickness[1.6]], 
+                    GeometricTransformation[
+                    Inset[
+                    Style["\[FilledCircle]", FontSize -> 5], {0., 0.}], {{{
+                    2.302585092994046, -0.40487802983126414`}}, {{
+                    3.6888794541139363`, -0.4726725734431613}}, {{
+                    5.298317366548036, -0.39533944900262213`}}}]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.00923807720496315, 
+                    "SoftMarginParameter" -> 1., "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124940887606209]]}, Center]]}, {
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.006238299793648096, 
+                    "SoftMarginParameter" -> 0.1, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124915117802433]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.880722, 0.611041, 0.142051], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.004025887378209152, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124919412769729]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.560181, 0.691569, 0.194885], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.001434528472966658, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124923707737025]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.922526, 0.385626, 0.209179], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.002846453381174013, 
+                    "SoftMarginParameter" -> 1., "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124928002704321]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.528488, 0.470624, 0.701351], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.008490677937606593, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124932297671617]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.772079, 0.431554, 0.102387], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.006445138027191688, 
+                    "SoftMarginParameter" -> 0.4, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124936592638913]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.363898, 0.618501, 0.782349], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.00923807720496315, 
+                    "SoftMarginParameter" -> 1., "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124940887606209]]}, 
+                    Center]], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.006238299793648096, 
+                    "SoftMarginParameter" -> 0.1, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124915117802433]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.880722, 0.611041, 0.142051], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.004025887378209152, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124919412769729]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.560181, 0.691569, 0.194885], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.001434528472966658, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124923707737025]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.922526, 0.385626, 0.209179], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.002846453381174013, 
+                    "SoftMarginParameter" -> 1., "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124928002704321]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.528488, 0.470624, 0.701351], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.008490677937606593, 
+                    "SoftMarginParameter" -> 3, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124932297671617]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.772079, 0.431554, 0.102387], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.006445138027191688, 
+                    "SoftMarginParameter" -> 0.4, "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124936592638913]]}, Center]], 
+                    Tooltip[{
+                    Directive[
+                    PointSize[0.012833333333333334`], 
+                    RGBColor[0.363898, 0.618501, 0.782349], 
+                    AbsoluteThickness[1.6]]}, 
+                    Column[{
+                    Style["SupportVectorMachine", 
+                    GrayLevel[0], 16], 
+                    Dataset[
+                    Association[
+                    "KernelType" -> "RadialBasisFunction", 
+                    "GammaScalingParameter" -> 0.00923807720496315, 
+                    "SoftMarginParameter" -> 1., "PolynomialDegree" -> 3, 
+                    "BiasParameter" -> 1, "MulticlassStrategy" -> Automatic], 
+                    
+                    
+                    TypeSystem`Struct[{
+                    "KernelType", "GammaScalingParameter", 
+                    "SoftMarginParameter", "PolynomialDegree", 
+                    "BiasParameter", "MulticlassStrategy"}, {
+                    TypeSystem`Atom[String], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Real], 
+                    TypeSystem`Atom[Integer], 
+                    TypeSystem`Atom[Integer], TypeSystem`AnyType}], 
+                    Association["ID" -> 124940887606209]]}, 
+                    Center]], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}}, {{}, {}}}}, {
+                    DisplayFunction -> Identity, DisplayFunction -> Identity, 
+                    AspectRatio -> GoldenRatio^(-1), Axes -> {True, True}, 
+                    AxesLabel -> {None, None}, 
+                    AxesOrigin -> {2.208602027973881, -0.5459491689233437}, 
+                    DisplayFunction :> Identity, 
+                    Frame -> {{True, True}, {True, True}}, 
+                    FrameLabel -> {{None, None}, {
+                    "training examples used", None}}, FrameTicks -> {{Quiet[
+                    Charting`ScaledTicks[{Log, Exp}][#, #2, {6, 6}]]& , {}}, {
+                    Quiet[
+                    Charting`ScaledTicks[{Log, Exp}][#, #2, {6, 6}]]& , {}}}, 
+                    GridLines -> {
+                    Charting`ScaledTickValues[{Log, Exp}][#, #2, {6, 6}]& , 
+                    Charting`ScaledTickValues[{Log, Exp}][#, #2, {6, 6}]& }, 
+                    GridLinesStyle -> Directive[
+                    GrayLevel[0.5, 0.4]], ImageMargins -> 0, 
+                    ImagePadding -> {{Automatic, 10}, {37, 0}}, ImageSize -> 
+                    330, LabelStyle -> 10, 
+                    Method -> {"OptimizePlotMarkers" -> True, 
+                    "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+                    (Exp[#]& )[
+                    Part[#, 1]], 
+                    (Exp[#]& )[
+                    Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+                    (Exp[#]& )[
+                    Part[#, 1]], 
+                    (Exp[#]& )[
+                    Part[#, 2]]}& )}}, PlotRange -> {{2.208602027973881, 
+                    Log[1000]}, {-0.5459491689233437, -0.239491088102059}}, 
+                    PlotRangeClipping -> True, PlotRangePadding -> {{
+                    Scaled[0.02], 0}, {
+                    Scaled[0.02], 
+                    Scaled[0.05]}}, Ticks -> {Quiet[
+                    Charting`ScaledTicks[{Log, Exp}][#, #2, {6, 6}]]& , Quiet[
+                    
+                    Charting`ScaledTicks[{Log, Exp}][#, #2, {6, 6}]]& }}]}]], 
+                    Appearance -> "Frameless"]}}, 
+                    Alignment -> {Center, Baseline}, 
+                    ItemSize -> {{3, 20, 3}, {2}}]], StandardForm],
+                 ImageSizeCache->{330., {120., 126.}}],
+                DynamicModuleValues:>{}],
+               Alignment->Center,
+               StripOnInput->False], "\[SpanFromLeft]"}
+            },
+            AutoDelete->False,
+            ColumnsEqual->False,
+            
+            GridBoxAlignment->{
+             "Columns" -> {Right, {Left}}, "Rows" -> {{Baseline}}},
+            GridBoxDividers->{"Columns" -> {False, {
+                 Opacity[0.15]}, False}},
+            
+            GridBoxItemSize->{
+             "Columns" -> {Automatic, {Automatic}}, "Rows" -> {{1.}}},
+            GridBoxSpacings->{"Columns" -> {
+                Offset[0.27999999999999997`], 
+                Offset[1.1199999999999999`], {
+                 Offset[1.75]}, 
+                Offset[0.27999999999999997`]}, "Rows" -> {
+                Offset[0.2], {
+                 Offset[0.8]}, 
+                Offset[0.2]}}],
+           "Grid"],
+          FrameMargins->{{10, 10}, {10, 5}},
+          FrameStyle->None,
+          StripOnInput->False],
+         Deploy,
+         DefaultBaseStyle->"Deploy"],
+        Alignment->Center,
+        BaseStyle->{
+         FontWeight -> "Light", FontSize -> 11, FontFamily -> 
+          ".AppleSystemUIFont", NumberMarks -> False, Deployed -> False},
+        StripOnInput->False]}
+     },
+     DefaultBaseStyle->"Column",
+     GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+     GridBoxDividers->{"Columns" -> {{False}}, "Rows" -> {{False}}},
+     GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{1.}}},
+     GridBoxSpacings->{"Columns" -> {
+         Offset[0.27999999999999997`], {
+          Offset[0.5599999999999999]}, 
+         Offset[0.27999999999999997`]}, "Rows" -> {
+         Offset[0.2], 
+         Offset[0.8], {
+          Offset[0.4]}, 
+         Offset[0.2]}}],
+    Background->GrayLevel[1],
+    FrameMargins->{{0, 0}, {0, 0}},
+    FrameStyle->GrayLevel[0.85],
+    RoundingRadius->5,
+    StripOnInput->False],
+   StripOnInput->False,
+   LineBreakWithin->False],
+  Deploy,
+  DefaultBaseStyle->"Deploy"]], "Output",
+ CellChangeTimes->{3.88552334307476*^9, 3.8855237292463303`*^9, 
+  3.885524648870554*^9, 3.885527659594296*^9, 3.885692474274685*^9, 
+  3.885692872796871*^9, 3.885692935053193*^9, 3.885693017058331*^9, 
+  3.885693078747995*^9, 3.8856931097249937`*^9, 3.885693321208724*^9, 
+  3.885693414210988*^9, 3.885693489963648*^9, 3.885693601652486*^9, 
+  3.885693646261208*^9, 3.8856936959616623`*^9, 3.885693743255378*^9, 
+  3.885693802496216*^9, 3.885693858543579*^9, 3.885693914283852*^9, 
+  3.88569402621463*^9, 3.885694233012327*^9, 3.885694272138144*^9, 
+  3.885694353847781*^9, 3.885694432853991*^9, 3.885694492387638*^9, 
+  3.885694546849496*^9, 3.885698450357093*^9, 3.8864779699828653`*^9},
+ CellLabel->"Out[99]=",ExpressionUUID->"098fa2c4-feab-434f-841c-463febc66b13"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+    "glm1", " ", "\:0441\:0432\:0435\:0440\:0445\:0443", " ", 
+     "\:0440\:0430\:0441\:043a\:043e\:043c\:0435\:043d\:0442\:0438\:0440\:043e\
+\:0432\:0430\:0442\:044c"}], ",", " ", 
+    RowBox[{
+    "\:0441\:0433\:0435\:043d\:0435\:0440\:0438\:0440\:043e\:0432\:0430\:0442\
+\:044c", " ", "\:043d\:043e\:0432\:0443\:044e", " ", "1000", " ", 
+     "\:043c\:0430\:0441\:0441\:0438\:0432\:043e\:0432"}], ",", " ", 
+    RowBox[{
+    "\:043e\:0431\:0443\:0447\:0435\:043d\:0438\:0435", " ", "\:043d\:0435", 
+     " ", "\:0442\:0440\:043e\:0433\:0430\:044f", " ", 
+     "\:0441\:0440\:0430\:0437\:0443", " ", 
+     "\:0437\:0430\:043f\:0443\:0441\:0442\:0438\:0442\:044c", " ", 
+     "\:044d\:0442\:0443", " ", "\:0447\:0430\:0441\:0442\:044c"}]}], "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"error0", "=", "0"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"tei", "=", 
+     RowBox[{"-", "1"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"error1", "=", "0"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"For", "[", 
+     RowBox[{
+      RowBox[{"i", "=", "1"}], ",", 
+      RowBox[{"i", "\[LessEqual]", "1000"}], ",", 
+      RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"i", "\[LessEqual]", "500"}], " ", "&&", " ", 
+          RowBox[{
+           RowBox[{"c", "[", 
+            RowBox[{"glm1", "[", 
+             RowBox[{"[", "i", "]"}], "]"}], "]"}], "\[Equal]", "1"}]}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"error0", "++"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"tei", "=", "i"}], ";"}]}], "\[IndentingNewLine]", "]"}], 
+       ";", "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"i", ">", "500"}], " ", "&&", " ", 
+          RowBox[{
+           RowBox[{"c", "[", 
+            RowBox[{"glm1", "[", 
+             RowBox[{"[", "i", "]"}], "]"}], "]"}], "\[Equal]", "0"}]}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"error1", "++"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"tei", "=", "i"}], ";"}]}], "\[IndentingNewLine]", "]"}], 
+       ";"}]}], "\[IndentingNewLine]", "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{
+     "error0", ",", "\"\< \>\"", ",", "error1", ",", "\"\< \>\"", ",", 
+      "tei"}], "]"}], ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.885523740931937*^9, 3.88552383805577*^9}, {
+   3.885523875147931*^9, 3.885524122313861*^9}, {3.8855241685870667`*^9, 
+   3.885524226400857*^9}, {3.885525424243878*^9, 3.885525472752529*^9}, 
+   3.885694392943185*^9},
+ CellLabel->
+  "In[141]:=",ExpressionUUID->"6e3a7ac0-d2ff-4925-8080-d5af46731d01"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+  "81", "\[InvisibleSpace]", "\<\" \"\>", "\[InvisibleSpace]", "158", 
+   "\[InvisibleSpace]", "\<\" \"\>", "\[InvisibleSpace]", "998"}],
+  SequenceForm[81, " ", 158, " ", 998],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.8855242148214283`*^9, 3.885524686173633*^9, 3.885527693210724*^9, 
+   3.88569248744003*^9, 3.885692898083502*^9, {3.8856929428574457`*^9, 
+   3.885692987524269*^9}, 3.885693040270668*^9, {3.885693086983211*^9, 
+   3.885693117429183*^9}, 3.885693296476603*^9, {3.88569332978167*^9, 
+   3.885693356397403*^9}, {3.8856934232677917`*^9, 3.885693450923298*^9}, 
+   3.885693498702263*^9, 3.8856935325218277`*^9, 3.885693619608796*^9, 
+   3.8856936658159323`*^9, 3.885693716448181*^9, 3.885693765688634*^9, 
+   3.885693824937728*^9, 3.8856938840218887`*^9, 3.885693941728397*^9, 
+   3.88569404169094*^9, 3.885694247591298*^9, 3.885694290827004*^9, {
+   3.8856943732920017`*^9, 3.8856944013697042`*^9}, 3.88569445727547*^9, 
+   3.885694518546566*^9, 3.8856945732339373`*^9, 3.885698469719315*^9, {
+   3.8864779928971043`*^9, 3.886478020913212*^9}},
+ CellLabel->
+  "During evaluation of \
+In[141]:=",ExpressionUUID->"a62290b9-fbf2-43af-974a-f0100c9eee6d"]
+}, Open  ]]
+},
+WindowSize->{808, 911},
+WindowMargins->{{Automatic, 150}, {30, Automatic}},
+FrontEndVersion->"12.0 for Mac OS X x86 (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 16630, 352, 1354, "Input",ExpressionUUID->"00840753-6101-4307-9ac2-6274132269ab"],
+Cell[CellGroupData[{
+Cell[17235, 378, 956, 18, 24, "Print",ExpressionUUID->"1e0c128c-85b8-4b0e-a408-9ecabaad6db0"],
+Cell[18194, 398, 737, 12, 24, "Print",ExpressionUUID->"0aff4290-9338-4717-ad56-f9a42a92ead2"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18980, 416, 2045, 54, 241, "Input",ExpressionUUID->"ca1201d6-f653-4298-b8e7-ad2e2ccc80d8"],
+Cell[21028, 472, 159116, 3202, 541, "Output",ExpressionUUID->"098fa2c4-feab-434f-841c-463febc66b13"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[180181, 3679, 2869, 70, 346, "Input",ExpressionUUID->"6e3a7ac0-d2ff-4925-8080-d5af46731d01"],
+Cell[183053, 3751, 1223, 22, 24, "Print",ExpressionUUID->"a62290b9-fbf2-43af-974a-f0100c9eee6d"]
+}, Open  ]]
+}
+]
+*)
+
